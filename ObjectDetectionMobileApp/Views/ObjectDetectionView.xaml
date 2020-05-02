@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ObjectDetectionMobileApp.Views.ObjectDetectionView"
+             xmlns:vm="clr-namespace:ObjectDetectionMobileApp.ViewModels"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"             ios:Page.UseSafeArea="True">
+    <ContentPage.BindingContext>
+        <vm:ObjectDetectionViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="pick.png"
+                     Text="Pick Photo"
+                     Order="Primary"
+                     Command="{Binding TakePhotoCommand}"
+                     CommandParameter="{StaticResource FalseValue}"
+                     Priority="0" />
+
+        <ToolbarItem Icon="camera.png"
+                     Text="Take Photo"
+                     Order="Primary"
+                     Command="{Binding TakePhotoCommand}"
+                     CommandParameter="{StaticResource TrueValue}"
+                     Priority="1" />
+
+        <ToolbarItem Icon="cloud.png"
+                     Text="Detect (Azure)"
+                     Order="Primary"
+                     Command="{Binding DetectObjectsCommand}"
+                     CommandParameter="{StaticResource FalseValue}"
+                     Priority="2" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <StackLayout Padding="10">
+            <Label Text="Image"
+                   Margin="5" 
+                   TextColor="Blue"
+                   FontSize="Large"
+                   FontAttributes="Bold"/>
+
+            <skia:SKCanvasView WidthRequest="400"
+                               HeightRequest="400"
+                               Margin="5"
+                               HorizontalOptions="CenterAndExpand"
+                               x:Name="ImageCanvas"
+                               PaintSurface="OnCanvasViewPaintSurface"/>
+
+            <!--<Image Source="{Binding PhotoStream}"
+                   Margin="5"
+                   WidthRequest="400" 
+                   HeightRequest="400"  
+                   Aspect="AspectFit"
+                   HorizontalOptions="CenterAndExpand"/>-->
+
+            <ActivityIndicator Margin="5"
+                               IsVisible="{Binding IsBusy}" 
+                               IsRunning="{Binding IsBusy}" 
+                               IsEnabled="{Binding IsBusy}"
+                               HorizontalOptions="CenterAndExpand"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
